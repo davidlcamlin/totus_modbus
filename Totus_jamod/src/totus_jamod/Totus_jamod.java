@@ -7,7 +7,6 @@ import net.wimpi.modbus.io.*;
 import net.wimpi.modbus.net.*;
 import net.wimpi.modbus.util.*;
 import java.nio.*;
-import java.util.Arrays;
         
 /**
  *
@@ -17,11 +16,11 @@ public class Totus_jamod {
 
     public static float Convert2Float(byte[] a, byte[] b)
     {
-        ByteBuffer bb = ByteBuffer.allocate(a.length + b.length);
-        bb.put(a);
-        bb.put(b);
-        bb.compact(); // no need if backing array is sized appropriately to begin with
-        float result = ByteBuffer.wrap(bb.array()).order(ByteOrder.BIG_ENDIAN).getFloat();
+        ByteBuffer bbuffer = ByteBuffer.allocate(a.length + b.length);
+        bbuffer.put(a);
+        bbuffer.put(b);
+        bbuffer.compact(); // no need if backing array is sized appropriately to begin with
+        float result = ByteBuffer.wrap(bbuffer.array()).order(ByteOrder.BIG_ENDIAN).getFloat();
         return result;
     }
     /**
@@ -31,11 +30,29 @@ public class Totus_jamod {
         // TODO code application logic here
         System.out.println("Hello Totus MODBUS!"); // Display the string.
         try {
-            TCPMasterConnection con = new TCPMasterConnection(InetAddress.getByName("192.168.42.37"));
+/*            TCPMasterConnection con = new TCPMasterConnection(InetAddress.getByName("192.168.42.37"));
             con.setPort(502);   //port as configured on the unit
             con.connect();  //connect to unit
-            
             ModbusTCPTransaction trans = new ModbusTCPTransaction(con);           
+*/
+            
+            //Set Master identifier    
+            //ModbusCoupler.createModbusCoupler(null);
+            //ModbusCoupler.getReference().setUnitID(1);  
+            
+            //Setup serial parameters
+            SerialParameters params = new SerialParameters();
+            params.setPortName("COM8");//PC COM port
+            params.setBaudRate(115200);
+            params.setDatabits(8);
+            params.setParity("None");
+            params.setStopbits(1);
+            params.setEncoding("rtu");  //"ascii"/"rtu"
+            params.setEcho(true);
+            params.setReceiveTimeout(3000);
+            params.
+            SerialConnection con = new SerialConnection(params);
+            ModbusSerialTransaction trans = new ModbusSerialTransaction(con);
 
             {
                 int startAddress = 1000;
