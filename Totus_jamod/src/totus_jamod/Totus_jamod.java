@@ -50,12 +50,10 @@ public class Totus_jamod {
             params.setEncoding("rtu");  //"ascii"/"rtu"
             params.setEcho(true);
             params.setReceiveTimeout(3000);
-            for(int i = 0; i < 5; i++)
-            {
-                System.out.println("i=" + i + " flow:" + params.flowToString(i));
-            }
-            //params.setFlowControlIn();
-            //params.setFlowControlOut();
+            
+            String flows[] = {"none", "xon/xoff out", "xon/xoff in", "rts/cts in", "rts/cts out"};        
+            params.setFlowControlIn(flows[0]);//0=none for RS232, 3="rts/cts in" for RS485
+            params.setFlowControlOut(flows[0]);//0=none for RS232, 4="rts/cts out" for RS485
             SerialConnection con = new SerialConnection(params);
             ModbusSerialTransaction trans = new ModbusSerialTransaction(con);
 
