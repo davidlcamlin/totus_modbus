@@ -50,7 +50,7 @@ public class Totus_jamod {
             params.setEncoding("rtu");  //"ascii"/"rtu"
             params.setEcho(true);
             params.setReceiveTimeout(3000);
-            params.
+
             SerialConnection con = new SerialConnection(params);
             ModbusSerialTransaction trans = new ModbusSerialTransaction(con);
 
