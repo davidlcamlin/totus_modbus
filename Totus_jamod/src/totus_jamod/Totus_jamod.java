@@ -43,12 +43,12 @@ public class Totus_jamod {
             //Setup serial parameters
             SerialParameters params = new SerialParameters();
             params.setPortName("COM8");//PC COM port
-            params.setBaudRate(115200);
-            params.setDatabits(8);
-            params.setParity("None");
-            params.setStopbits(1);
-            params.setEncoding("rtu");  //"ascii"/"rtu"
-            params.setEcho(true);
+            params.setBaudRate(115200);//baudrate set in Totus unit
+            params.setDatabits("8");//"5", "6", "7", "8"
+            params.setParity("None");//"None", "Even", "Odd"
+            params.setStopbits("1");//"1", "1.5", "2"
+            params.setEncoding("rtu");  //"ascii", "rtu"
+            params.setEcho(false);
             params.setReceiveTimeout(3000);
             
             String flows[] = {"none", "xon/xoff out", "xon/xoff in", "rts/cts in", "rts/cts out"};        
