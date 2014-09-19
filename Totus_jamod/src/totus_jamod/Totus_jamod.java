@@ -7,7 +7,7 @@ import net.wimpi.modbus.io.*;
 import net.wimpi.modbus.net.*;
 import net.wimpi.modbus.util.*;
 import java.nio.*;
-        
+import javax.comm.*;        
 /**
  *
  * @author d.luca
@@ -44,17 +44,15 @@ public class Totus_jamod {
             SerialParameters params = new SerialParameters();
             params.setPortName("COM8");//PC COM port
             params.setBaudRate(115200);//baudrate set in Totus unit
-            params.setDatabits("8");//"5", "6", "7", "8"
-            params.setParity("None");//"None", "Even", "Odd"
-            params.setStopbits("1");//"1", "1.5", "2"
+            params.setDatabits(SerialPort.DATABITS_8);
+            params.setParity(SerialPort.PARITY_NONE);
+            params.setStopbits(SerialPort.STOPBITS_1);
             params.setEncoding("rtu");  //"ascii", "rtu"
             params.setEcho(false);
             params.setReceiveTimeout(3000);
             
-            
-            String flows[] = {"none", "xon/xoff out", "xon/xoff in", "rts/cts in", "rts/cts out"};        
-            params.setFlowControlIn(flows[0]);//0=none for RS232, 3="rts/cts in" for RS485
-            params.setFlowControlOut(flows[0]);//0=none for RS232, 4="rts/cts out" for RS485
+            params.setFlowControlIn(SerialPort.FLOWCONTROL_NONE);//FLOWCONTROL_NONE for RS232, FLOWCONTROL_RTSCTS_IN for RS485
+            params.setFlowControlOut(SerialPort.FLOWCONTROL_NONE); ////FLOWCONTROL_NONE for RS232, FLOWCONTROL_RTSCTS_OUT for RS485
             SerialConnection con = new SerialConnection(params);
             ModbusSerialTransaction trans = new ModbusSerialTransaction(con);
 
