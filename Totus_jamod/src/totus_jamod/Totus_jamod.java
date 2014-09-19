@@ -50,7 +50,12 @@ public class Totus_jamod {
             params.setEncoding("rtu");  //"ascii"/"rtu"
             params.setEcho(true);
             params.setReceiveTimeout(3000);
-            params.
+            for(int i = 0; i < 5; i++)
+            {
+                System.out.println("i=" + i + " flow:" + params.flowToString(i));
+            }
+            //params.setFlowControlIn();
+            //params.setFlowControlOut();
             SerialConnection con = new SerialConnection(params);
             ModbusSerialTransaction trans = new ModbusSerialTransaction(con);
 
