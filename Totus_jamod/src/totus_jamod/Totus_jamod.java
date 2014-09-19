@@ -6,13 +6,24 @@ import net.wimpi.modbus.msg.*;
 import net.wimpi.modbus.io.*;
 import net.wimpi.modbus.net.*;
 import net.wimpi.modbus.util.*;
-
+import java.nio.*;
+import java.util.Arrays;
+        
 /**
  *
  * @author d.luca
  */
 public class Totus_jamod {
 
+    public static float Convert2Float(byte[] a, byte[] b)
+    {
+        ByteBuffer bb = ByteBuffer.allocate(a.length + b.length);
+        bb.put(a);
+        bb.put(b);
+        bb.compact(); // no need if backing array is sized appropriately to begin with
+        float result = ByteBuffer.wrap(bb.array()).order(ByteOrder.BIG_ENDIAN).getFloat();
+        return result;
+    }
     /**
      * @param args the command line arguments
      */
@@ -21,8 +32,8 @@ public class Totus_jamod {
         System.out.println("Hello Totus MODBUS!"); // Display the string.
         try {
             TCPMasterConnection con = new TCPMasterConnection(InetAddress.getByName("192.168.42.37"));
-            con.setPort(502);
-            con.connect();
+            con.setPort(502);   //port as configured on the unit
+            con.connect();  //connect to unit
             
             ModbusTCPTransaction trans = new ModbusTCPTransaction(con);           
 
@@ -57,10 +68,10 @@ public class Totus_jamod {
             }
             
             {
-                int startAddress = 1200;
-                int numInputs = 2;
+                int startAddress = 100;    //register map
+                int numInputs = 2;          
                 ReadInputDiscretesRequest req = new ReadInputDiscretesRequest(startAddress, numInputs);
-                req.setUnitID(1);
+                req.setUnitID(1);   //slave ID of the unit
                 trans.setRequest(req);            
                 trans.execute();
                 ReadInputDiscretesResponse res = (ReadInputDiscretesResponse) trans.getResponse();
@@ -68,7 +79,7 @@ public class Totus_jamod {
                 String totusAlarms[] = {
                     "ALARM/System/HL/State",
                     "ALARM/System/HHLL/State"
-                    };
+                };
 
 
                 for(int i = 0; i < numInputs; i++)
@@ -77,6 +88,42 @@ public class Totus_jamod {
                     System.out.println("Alarm  " + (startAddress + i) + " " + totusAlarms[i] + " = " + bit);
                 }
             }
+            
+            {
+                int startAddress = 2200;
+                int numInputs = 12;
+                ReadInputRegistersRequest req = new ReadInputRegistersRequest(startAddress, numInputs * 2);
+                req.setUnitID(1);
+                trans.setRequest(req);            
+                trans.execute();
+                ReadInputRegistersResponse res = (ReadInputRegistersResponse) trans.getResponse();
+
+                String totusDGA[] = {
+                    "DGA/SourceA/CH4",
+                    "DGA/SourceA/C2H6",
+                    "DGA/SourceA/C2H4",
+                    "DGA/SourceA/C2H2",
+                    "DGA/SourceA/CO",
+                    "DGA/SourceA/CO2",
+                    "DGA/SourceA/O2",
+                    "DGA/SourceA/N2",
+                    "DGA/SourceA/H2",
+                    "DGA/SourceA/H2O",
+                    "DGA/SourceA/TDCG",
+                    "DGA/SourceA/THC"
+                };
+
+
+                for(int i = 0; i < numInputs; i++)
+                {   
+                    float ppm = Convert2Float(res.getRegister(i*2).toBytes(), res.getRegister((i*2)+1).toBytes());
+                    System.out.println("Float32 " + (startAddress + i*2) + " " + totusDGA[i] + " = " + ppm + " ppm");
+                }
+            }
+            
+            
+            
+            con.close();//close connection
             
         } catch (Exception ex) {
             ex.printStackTrace();
