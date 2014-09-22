@@ -54,6 +54,12 @@ public class Totus_jamod {
             params.setFlowControlIn(SerialPort.FLOWCONTROL_NONE);//FLOWCONTROL_NONE for RS232, FLOWCONTROL_RTSCTS_IN for RS485
             params.setFlowControlOut(SerialPort.FLOWCONTROL_NONE); ////FLOWCONTROL_NONE for RS232, FLOWCONTROL_RTSCTS_OUT for RS485
             SerialConnection con = new SerialConnection(params);
+            con.open();
+            
+            if(con.isOpen())
+                System.out.println("connected");
+            else
+                System.out.println("not connected");
             ModbusSerialTransaction trans = new ModbusSerialTransaction(con);
 
             {
@@ -61,6 +67,7 @@ public class Totus_jamod {
                 int numInputs = 10;
                 ReadInputRegistersRequest req = new ReadInputRegistersRequest(startAddress, numInputs);
                 req.setUnitID(1);
+                req.setHeadless();
                 trans.setRequest(req);            
                 trans.execute();
                 ReadInputRegistersResponse res = (ReadInputRegistersResponse) trans.getResponse();
@@ -91,6 +98,7 @@ public class Totus_jamod {
                 int numInputs = 2;          
                 ReadInputDiscretesRequest req = new ReadInputDiscretesRequest(startAddress, numInputs);
                 req.setUnitID(1);   //slave ID of the unit
+                req.setHeadless();
                 trans.setRequest(req);            
                 trans.execute();
                 ReadInputDiscretesResponse res = (ReadInputDiscretesResponse) trans.getResponse();
@@ -113,6 +121,7 @@ public class Totus_jamod {
                 int numInputs = 12;
                 ReadInputRegistersRequest req = new ReadInputRegistersRequest(startAddress, numInputs * 2);
                 req.setUnitID(1);
+                req.setHeadless();
                 trans.setRequest(req);            
                 trans.execute();
                 ReadInputRegistersResponse res = (ReadInputRegistersResponse) trans.getResponse();
