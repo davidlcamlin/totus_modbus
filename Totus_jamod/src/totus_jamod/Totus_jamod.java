@@ -7,7 +7,9 @@ import net.wimpi.modbus.io.*;
 import net.wimpi.modbus.net.*;
 import net.wimpi.modbus.util.*;
 import java.nio.*;
-import gnu.io.*;        
+import gnu.io.*; //for RXTX
+//import javax.comm.*;  //for Java Communications API;
+
 /**
  *
  * @author d.luca
