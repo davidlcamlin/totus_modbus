@@ -155,9 +155,12 @@ public class Totus_jamod {
             con.close();//close connection
             
         } catch (Exception ex) {
+            System.err.println("Exception caught:");
             ex.printStackTrace();
+            System.exit(-1);
         }
-        
+        System.out.println("Program finished.");
+        System.exit(0);
     }
     
 }
