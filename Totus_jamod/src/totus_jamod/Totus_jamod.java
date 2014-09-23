@@ -1,14 +1,16 @@
 package totus_jamod;
-import java.net.*;
-import java.io.*;
 import net.wimpi.modbus.*;
 import net.wimpi.modbus.msg.*;
 import net.wimpi.modbus.io.*;
 import net.wimpi.modbus.net.*;
 import net.wimpi.modbus.util.*;
 import java.nio.*;
-import gnu.io.*; //for RXTX
-//import javax.comm.*;  //for Java Communications API;
+import java.io.*;   
+
+//uncomment one of the following depending on connection type
+//import java.net.*;  //for TCP Modbus    
+import gnu.io.*; //for Serial RXTX
+//import javax.comm.*;  //for Serial Java Communications API
 
 /**
  *
@@ -33,17 +35,16 @@ public class Totus_jamod {
         System.out.println("Hello Totus MODBUS!"); // Display the string.
         System.out.println(System.getProperty("java.library.path"));
         try {
-/*            TCPMasterConnection con = new TCPMasterConnection(InetAddress.getByName("192.168.42.37"));
+            
+/*uncomment for TCP connection
+            TCPMasterConnection con = new TCPMasterConnection(InetAddress.getByName("192.168.42.37"));
             con.setPort(502);   //port as configured on the unit
             con.connect();  //connect to unit
             ModbusTCPTransaction trans = new ModbusTCPTransaction(con);           
 */
-            
-            //Set Master identifier    
-            //ModbusCoupler.createModbusCoupler(null);
-            //ModbusCoupler.getReference().setUnitID(1);  
-            
-            //Setup serial parameters
+//end of tcp connection setup             
+   
+//For serial connection setup serial parameters
             SerialParameters params = new SerialParameters();
             params.setPortName("COM3");//PC COM port
             params.setBaudRate(115200);//baudrate set in Totus unit
@@ -64,7 +65,8 @@ public class Totus_jamod {
             else
                 System.out.println("not connected");
             ModbusSerialTransaction trans = new ModbusSerialTransaction(con);
-
+//end of serial connection setup
+            
             {
                 int startAddress = 1000;
                 int numInputs = 10;
@@ -157,7 +159,7 @@ public class Totus_jamod {
             con.close();//close connection
             
         } catch (Exception ex) {
-            System.err.println("Exception caught:");
+            System.err.println("Exception caught:" + ex.getMessage());
             ex.printStackTrace();
             System.exit(-1);
         }
