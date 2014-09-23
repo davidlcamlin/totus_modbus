@@ -7,7 +7,7 @@ import net.wimpi.modbus.io.*;
 import net.wimpi.modbus.net.*;
 import net.wimpi.modbus.util.*;
 import java.nio.*;
-import javax.comm.*;        
+import gnu.io.*;        
 /**
  *
  * @author d.luca
@@ -29,6 +29,7 @@ public class Totus_jamod {
     public static void main(String[] args) {
         // TODO code application logic here
         System.out.println("Hello Totus MODBUS!"); // Display the string.
+        System.out.println(System.getProperty("java.library.path"));
         try {
 /*            TCPMasterConnection con = new TCPMasterConnection(InetAddress.getByName("192.168.42.37"));
             con.setPort(502);   //port as configured on the unit
@@ -42,14 +43,14 @@ public class Totus_jamod {
             
             //Setup serial parameters
             SerialParameters params = new SerialParameters();
-            params.setPortName("COM8");//PC COM port
+            params.setPortName("COM3");//PC COM port
             params.setBaudRate(115200);//baudrate set in Totus unit
             params.setDatabits(SerialPort.DATABITS_8);
             params.setParity(SerialPort.PARITY_NONE);
             params.setStopbits(SerialPort.STOPBITS_1);
             params.setEncoding("rtu");  //"ascii", "rtu"
             params.setEcho(false);
-            params.setReceiveTimeout(3000);
+            //params.setReceiveTimeout(3000);
             
             params.setFlowControlIn(SerialPort.FLOWCONTROL_NONE);//FLOWCONTROL_NONE for RS232, FLOWCONTROL_RTSCTS_IN for RS485
             params.setFlowControlOut(SerialPort.FLOWCONTROL_NONE); ////FLOWCONTROL_NONE for RS232, FLOWCONTROL_RTSCTS_OUT for RS485
