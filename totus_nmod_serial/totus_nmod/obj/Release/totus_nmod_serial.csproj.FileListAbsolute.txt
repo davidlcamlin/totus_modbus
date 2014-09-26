@@ -1,0 +1,10 @@
+C:\GitHub\totus_modbus\totus_nmod_serial\totus_nmod\bin\Release\totus_nmod.exe.config
+C:\GitHub\totus_modbus\totus_nmod_serial\totus_nmod\bin\Release\totus_nmod.exe
+C:\GitHub\totus_modbus\totus_nmod_serial\totus_nmod\bin\Release\totus_nmod.pdb
+C:\GitHub\totus_modbus\totus_nmod_serial\totus_nmod\bin\Release\log4net.xml
+C:\GitHub\totus_modbus\totus_nmod_serial\totus_nmod\bin\Release\Modbus.pdb
+C:\GitHub\totus_modbus\totus_nmod_serial\totus_nmod\bin\Release\Modbus.xml
+C:\GitHub\totus_modbus\totus_nmod_serial\totus_nmod\bin\Release\Unme.Common.xml
+C:\GitHub\totus_modbus\totus_nmod_serial\totus_nmod\obj\Release\totus_nmod_serial.csprojResolveAssemblyReference.cache
+C:\GitHub\totus_modbus\totus_nmod_serial\totus_nmod\obj\Release\totus_nmod.exe
+C:\GitHub\totus_modbus\totus_nmod_serial\totus_nmod\obj\Release\totus_nmod.pdb
