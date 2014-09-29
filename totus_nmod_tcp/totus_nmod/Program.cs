@@ -30,7 +30,7 @@ namespace totus_nmod
             /*
              *  Connecting via TCP
              */
-            TcpClient client = new TcpClient("192.168.42.37", 502); //IP and port of the TOTUS unit
+            TcpClient client = new TcpClient("192.168.46.33", 502); //IP and port of the TOTUS unit
             Console.WriteLine("Client connected:{0}", client.Connected.ToString());
 
             ModbusIpMaster master = ModbusIpMaster.CreateIp(client);                        
