@@ -2,7 +2,7 @@ import sys, traceback
 import struct
 from pymodbus.constants import Endian
 from pymodbus.client.sync import ModbusTcpClient as ModbusClient
-#from pymodbus.client.sync import ModbusSerialClient as ModbusClient
+
 
 def Convert2Float(a, b):
     raw = struct.pack('>HH', a, b)
@@ -12,14 +12,8 @@ def Convert2Float(a, b):
 try:
 
     print "Hello Totus MODBUS!"
-    client = ModbusClient('192.168.46.33')
+    client = ModbusClient('192.168.46.83')
     client.connect()
-
-    numInputs = 10
-    startAddress = 1000
-    slaveID = 1
-    result = client.read_input_registers(startAddress, numInputs, slaveID)
-
 
 
     # read multiple int16 values
@@ -36,9 +30,15 @@ try:
                 "Thermal/TapChangerTemp/1hAvg"
                 ]
 
+    numInputs = 10
+    startAddress = 1000
+    slaveID = 1
+    result = client.read_input_registers(startAddress, numInputs, slaveID)
 
     for i in range(0, len(totusTemps)):
         print "Temp16  " + str(startAddress + i) + " " + totusTemps[i] + " = " + str(result.getRegister(i)/10.0) + "\xb0C"# scaling is 10
+
+
 
     # read alarms
     totusAlarms = [
@@ -89,7 +89,7 @@ try:
     slaveID = 1
     result = client.read_discrete_inputs(startAddress, numInputs, slaveID)
     doorStatus = ["closed", "opened"]
-    print "Door switch:" + str(startAddress) + " = " + str(result.getBit(0))
+    print "Door switch:" + str(startAddress) + " = " + str(doorStatus[result.getBit(0)])
 
 
 

@@ -1,8 +1,7 @@
 import sys, traceback
 import struct
 from pymodbus.constants import Endian
-from pymodbus.client.sync import ModbusTcpClient as ModbusClient
-#from pymodbus.client.sync import ModbusSerialClient as ModbusClient
+from pymodbus.client.sync import ModbusSerialClient as ModbusClient
 
 def Convert2Float(a, b):
     raw = struct.pack('>HH', a, b)
@@ -12,13 +11,10 @@ def Convert2Float(a, b):
 try:
 
     print "Hello Totus MODBUS!"
-    client = ModbusClient('192.168.46.33')
+    # method='ascii'
+    client = ModbusClient(method='rtu', port='COM5', timeout=1, bytesize = 8, baudrate = 115200, stopbits = 1, parity = 'N') # parity can be 'E'ven, 'O'dd
     client.connect()
 
-    numInputs = 10
-    startAddress = 1000
-    slaveID = 1
-    result = client.read_input_registers(startAddress, numInputs, slaveID)
 
 
 
@@ -36,6 +32,10 @@ try:
                 "Thermal/TapChangerTemp/1hAvg"
                 ]
 
+    numInputs = 10
+    startAddress = 1000
+    slaveID = 1
+    result = client.read_input_registers(startAddress, numInputs, slaveID)
 
     for i in range(0, len(totusTemps)):
         print "Temp16  " + str(startAddress + i) + " " + totusTemps[i] + " = " + str(result.getRegister(i)/10.0) + "\xb0C"# scaling is 10
