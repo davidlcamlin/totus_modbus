@@ -11,8 +11,8 @@ def Convert2Float(a, b):
 try:
 
     print "Hello Totus MODBUS!"
-    # method='ascii'
-    client = ModbusClient(method='rtu', port='COM5', timeout=1, bytesize = 8, baudrate = 115200, stopbits = 1, parity = 'N') # parity can be 'E'ven, 'O'dd
+    # method='rtu'
+    client = ModbusClient(method='rtu', port='COM11', timeout=1, bytesize = 8, baudrate = 115200, stopbits = 2, parity = 'N') # parity can be 'E'ven, 'O'dd
     client.connect()
 
 

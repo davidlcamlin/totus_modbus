@@ -12,7 +12,7 @@ def Convert2Float(a, b):
 try:
 
     print "Hello Totus MODBUS!"
-    client = ModbusClient('192.168.46.83')
+    client = ModbusClient('192.168.42.49', port = 1502)
     client.connect()
 
 
