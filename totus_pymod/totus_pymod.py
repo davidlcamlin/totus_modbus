@@ -38,7 +38,7 @@ try:
 
 
     for i in range(0, len(totusTemps)):
-        print "Temp16  " + str(startAddress + i) + " " + totusTemps[i] + " = " + str(result.getRegister(i)/10.0) # scaling is 10
+        print "Temp16  " + str(startAddress + i) + " " + totusTemps[i] + " = " + str(result.getRegister(i)/10.0) + "\xb0C"# scaling is 10
 
     # read alarms
     totusAlarms = [
@@ -81,9 +81,15 @@ try:
 
     for i in range(0, len(totusDGA)):
         val = Convert2Float(result.getRegister(i*2), result.getRegister((i*2) + 1))
-        print "Float32 " + str(startAddress + i*2) + " " + totusDGA[i] + " = "  + str(val)
+        print "Float32 " + str(startAddress + i*2) + " " + totusDGA[i] + " = "  + str(val) + " ppm"
 
 
+    numInputs = 1
+    startAddress = 1700
+    slaveID = 1
+    result = client.read_discrete_inputs(startAddress, numInputs, slaveID)
+    doorStatus = ["closed", "opened"]
+    print "Door switch:" + str(startAddress) + " = " + str(result.getBit(0))
 
 
 
