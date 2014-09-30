@@ -13,7 +13,7 @@ try:
 
     print "Hello Totus MODBUS!"
     client = ModbusClient('192.168.46.33')
-
+    client.connect()
 
     numInputs = 10
     startAddress = 1000
