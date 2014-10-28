@@ -1,4 +1,5 @@
 package totus_jamod;
+import java.net.*;  //for TCP Modbus    
 import net.wimpi.modbus.*;
 import net.wimpi.modbus.msg.*;
 import net.wimpi.modbus.io.*;
@@ -6,7 +7,7 @@ import net.wimpi.modbus.net.*;
 import net.wimpi.modbus.util.*;
 import java.nio.*;
 import java.io.*;   
-import java.net.*;  //for TCP Modbus    
+
 
 /**
  *
@@ -33,6 +34,7 @@ public class Totus_jamod {
             TCPMasterConnection con = new TCPMasterConnection(InetAddress.getByName("192.168.46.113"));
             con.setPort(502);   //port as configured on the unit            
             con.connect();  //connect to unit
+            con.setTimeout(2500);
             ModbusTCPTransaction trans = new ModbusTCPTransaction(con);           
             
             {
