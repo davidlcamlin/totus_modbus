@@ -10,9 +10,7 @@ def Convert2Float(a, b):
     return value
 
 try:
-
-    print "Hello Totus MODBUS!"
-    client = ModbusClient('192.168.42.49', port = 1502)
+    client = ModbusClient('192.168.46.113', port = 502)
     client.connect()
 
 
@@ -36,7 +34,7 @@ try:
     result = client.read_input_registers(startAddress, numInputs, slaveID)
 
     for i in range(0, len(totusTemps)):
-        print "Temp16  " + str(startAddress + i) + " " + totusTemps[i] + " = " + str(result.getRegister(i)/10.0) + "\xb0C"# scaling is 10
+        print totusTemps[i] + " = " + str(result.getRegister(i)/10.0) + "\xb0C"# scaling is 10
 
 
 
@@ -53,7 +51,7 @@ try:
 
 
     for i in range(0, len(totusAlarms)):
-        print "Alarm    " + str(startAddress + i) + " " + totusAlarms[i] + " = " + str(result.getBit(i))
+        print totusAlarms[i] + " = " + str(result.getBit(i))
 
 
     # read DGA float32 gases
@@ -81,7 +79,7 @@ try:
 
     for i in range(0, len(totusDGA)):
         val = Convert2Float(result.getRegister(i*2), result.getRegister((i*2) + 1))
-        print "Float32 " + str(startAddress + i*2) + " " + totusDGA[i] + " = "  + str(val) + " ppm"
+        print totusDGA[i] + " = "  + str(val) + " ppm"
 
 
     numInputs = 1

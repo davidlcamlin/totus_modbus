@@ -25,18 +25,13 @@ namespace totus_nmod
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello Totus MODBUS!");            
-
             /*
              *  Connecting via TCP
              */
-            TcpClient client = new TcpClient("192.168.46.33", 502); //IP and port of the TOTUS unit
-            Console.WriteLine("Client connected:{0}", client.Connected.ToString());
-
+            TcpClient client = new TcpClient("192.168.46.113", 502); //IP and port of the TOTUS unit
             ModbusIpMaster master = ModbusIpMaster.CreateIp(client);                        
             master.Transport.ReadTimeout = 1000;//ms
-
-            
+          
            
             try
             {
@@ -63,7 +58,7 @@ namespace totus_nmod
 
                     for (int i = 0; i < numInputs; i++)
                     {
-                        Console.WriteLine("Temp16  {0} {1} = {2}°C", startAddress + i, totusTemps[i], (float)temps[i] / 10); // divide by 10 as specified in Scaling column
+                        Console.WriteLine("{0} = {1}°C", totusTemps[i], (float)temps[i] / 10); // divide by 10 as specified in Scaling column
                     }
                 }
                 {
@@ -79,7 +74,7 @@ namespace totus_nmod
                     };
                     for (int i = 0; i < numInputs; i++)
                     {
-                        Console.WriteLine("Alarm    {0} {1} = {2}", startAddress + i, totusAlarms[i], alarms[i] ? 1 : 0);
+                        Console.WriteLine("{0} = {1}", totusAlarms[i], alarms[i]);
                     }
                 }
                 {
@@ -105,7 +100,7 @@ namespace totus_nmod
 
                     for (int i = 0; i < numInputs; i++)
                     {
-                        Console.WriteLine("Float32 {0} {1} = {2} ppm", startAddress + i * 2, totusDGA[i], Convert2Float(inputsdga[i * 2], inputsdga[i * 2 + 1]));
+                        Console.WriteLine("{0} = {1} ppm", totusDGA[i], Convert2Float(inputsdga[i * 2], inputsdga[i * 2 + 1]));
                     }
                 }
             }

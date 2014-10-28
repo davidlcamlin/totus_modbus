@@ -27,14 +27,11 @@ public class Totus_jamod {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        System.out.println("Hello Totus MODBUS!"); // Display the string.
-        System.out.println(System.getProperty("java.library.path"));
         try {
             
-        //TCP connection
-            TCPMasterConnection con = new TCPMasterConnection(InetAddress.getByName("192.168.42.36"));
-            con.setPort(502);   //port as configured on the unit
+            //TCP connection
+            TCPMasterConnection con = new TCPMasterConnection(InetAddress.getByName("192.168.46.113"));
+            con.setPort(502);   //port as configured on the unit            
             con.connect();  //connect to unit
             ModbusTCPTransaction trans = new ModbusTCPTransaction(con);           
             
@@ -65,7 +62,7 @@ public class Totus_jamod {
                 for(int i = 0; i < numInputs; i++)
                 {                                
                     float temp = res.getRegister(i).getValue();                
-                    System.out.println("Temp16 " + (startAddress + i) + " " + totusTemps[i] + " = " + temp/10.0 + "°C");
+                    System.out.println(totusTemps[i] + " = " + temp/10.0 + "°C");
                 }
             }
             
@@ -88,7 +85,7 @@ public class Totus_jamod {
                 for(int i = 0; i < numInputs; i++)
                 {                                
                     boolean bit = res.getDiscretes().getBit(i);                
-                    System.out.println("Alarm  " + (startAddress + i) + " " + totusAlarms[i] + " = " + bit);
+                    System.out.println(totusAlarms[i] + " = " + bit);
                 }
             }
             
@@ -121,7 +118,7 @@ public class Totus_jamod {
                 for(int i = 0; i < numInputs; i++)
                 {   
                     float ppm = Convert2Float(res.getRegister(i*2).toBytes(), res.getRegister((i*2)+1).toBytes());
-                    System.out.println("Float32 " + (startAddress + i*2) + " " + totusDGA[i] + " = " + ppm + " ppm");
+                    System.out.println(totusDGA[i] + " = " + ppm + " ppm");
                 }
             }
             

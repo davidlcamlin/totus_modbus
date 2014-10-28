@@ -87,7 +87,7 @@ public class Totus_jamod {
                 for(int i = 0; i < numInputs; i++)
                 {                                
                     float temp = res.getRegister(i).getValue();                
-                    System.out.println("Temp16 " + (startAddress + i) + " " + totusTemps[i] + " = " + temp/10.0 + "°C");
+                    System.out.println(totusTemps[i] + " = " + temp/10.0 + "°C");
                 }
             }
             
@@ -110,7 +110,7 @@ public class Totus_jamod {
                 for(int i = 0; i < numInputs; i++)
                 {                                
                     boolean bit = res.getDiscretes().getBit(i);                
-                    System.out.println("Alarm  " + (startAddress + i) + " " + totusAlarms[i] + " = " + bit);
+                    System.out.println(totusAlarms[i] + " = " + bit);
                 }
             }
             
@@ -143,7 +143,7 @@ public class Totus_jamod {
                 for(int i = 0; i < numInputs; i++)
                 {   
                     float ppm = Convert2Float(res.getRegister(i*2).toBytes(), res.getRegister((i*2)+1).toBytes());
-                    System.out.println("Float32 " + (startAddress + i*2) + " " + totusDGA[i] + " = " + ppm + " ppm");
+                    System.out.println(totusDGA[i] + " = " + ppm + " ppm");
                 }
             }
             
