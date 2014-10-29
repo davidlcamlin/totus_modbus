@@ -31,7 +31,7 @@ public class Totus_jamod {
         try {
             
             //TCP connection
-            TCPMasterConnection con = new TCPMasterConnection(InetAddress.getByName("192.168.42.114"));
+            TCPMasterConnection con = new TCPMasterConnection(InetAddress.getByName("192.168.46.33"));
             con.setPort(502);   //port as configured on the unit            
             con.connect();  //connect to unit
             con.setTimeout(2500);
@@ -42,7 +42,7 @@ public class Totus_jamod {
                 int numInputs = 10;
                 ReadInputRegistersRequest req = new ReadInputRegistersRequest(startAddress, numInputs);
                 req.setUnitID(1);
-                req.setHeadless();
+                //req.setHeadless();
                 trans.setRequest(req);            
                 trans.execute();
                 ReadInputRegistersResponse res = (ReadInputRegistersResponse) trans.getResponse();
@@ -73,7 +73,7 @@ public class Totus_jamod {
                 int numInputs = 2;          
                 ReadInputDiscretesRequest req = new ReadInputDiscretesRequest(startAddress, numInputs);
                 req.setUnitID(1);   //slave ID of the unit
-                req.setHeadless();
+                //req.setHeadless();
                 trans.setRequest(req);            
                 trans.execute();
                 ReadInputDiscretesResponse res = (ReadInputDiscretesResponse) trans.getResponse();
@@ -96,7 +96,7 @@ public class Totus_jamod {
                 int numInputs = 12;
                 ReadInputRegistersRequest req = new ReadInputRegistersRequest(startAddress, numInputs * 2);
                 req.setUnitID(1);
-                req.setHeadless();
+                //req.setHeadless();
                 trans.setRequest(req);            
                 trans.execute();
                 ReadInputRegistersResponse res = (ReadInputRegistersResponse) trans.getResponse();
@@ -133,7 +133,7 @@ public class Totus_jamod {
             ex.printStackTrace();
             System.exit(-1);
         }
-        System.out.println("Program finished.");
+        
         System.exit(0);
     }
     
