@@ -31,7 +31,7 @@ public class Totus_jamod {
         try {
             
             //TCP connection
-            TCPMasterConnection con = new TCPMasterConnection(InetAddress.getByName("192.168.46.113"));
+            TCPMasterConnection con = new TCPMasterConnection(InetAddress.getByName("192.168.42.114"));
             con.setPort(502);   //port as configured on the unit            
             con.connect();  //connect to unit
             con.setTimeout(2500);

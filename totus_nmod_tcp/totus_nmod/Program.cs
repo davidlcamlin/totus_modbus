@@ -25,40 +25,42 @@ namespace totus_nmod
 
         static void Main(string[] args)
         {
-            /*
-             *  Connecting via TCP
-             */
-            TcpClient client = new TcpClient("192.168.46.113", 502); //IP and port of the TOTUS unit
-            ModbusIpMaster master = ModbusIpMaster.CreateIp(client);                        
-            master.Transport.ReadTimeout = 1000;//ms
+
+            try{
+                /*
+                *  Connecting via TCP
+                */
+                TcpClient client = new TcpClient("192.168.42.114", 502); //IP and port of the TOTUS unit
+                ModbusIpMaster master = ModbusIpMaster.CreateIp(client);                        
+                master.Transport.ReadTimeout = 1000;//ms
           
-           
-            try
-            {
-                // read multiple int16 values                
-                string[] totusTemps = {
-                "Thermal/AmbientTemp",
-                "Thermal/AmbientTemp/1hAvg",
-                "Thermal/AmbientHumidity",
-                "Thermal/AmbientHumidity/1hAvg",
-                "Thermal/TopOilTemp", 
-                "Thermal/TopOilTemp/1hAvg",
-                "Thermal/BottomOilTemp",
-                "Thermal/BottomOilTemp/1hAvg",
-                "Thermal/TapChangerTemp",
-                "Thermal/TapChangerTemp/1hAvg"
-                };
-
+       
                 {
-                    //read int16 temperatures
-                    ushort numInputs = 10;
-                    byte slaveID = 1;
-                    ushort startAddress = 1000;  //select address from Totus Modbus table 
-                    ushort[] temps = master.ReadInputRegisters(slaveID, startAddress, numInputs);//*2 because we are reading 2byte unsigned short that needs converted to 4 byte floats
+                    // read multiple int16 values                
+                    string[] totusTemps = {
+                    "Thermal/AmbientTemp",
+                    "Thermal/AmbientTemp/1hAvg",
+                    "Thermal/AmbientHumidity",
+                    "Thermal/AmbientHumidity/1hAvg",
+                    "Thermal/TopOilTemp", 
+                    "Thermal/TopOilTemp/1hAvg",
+                    "Thermal/BottomOilTemp",
+                    "Thermal/BottomOilTemp/1hAvg",
+                    "Thermal/TapChangerTemp",
+                    "Thermal/TapChangerTemp/1hAvg"
+                    };
 
-                    for (int i = 0; i < numInputs; i++)
                     {
-                        Console.WriteLine("{0} = {1}°C", totusTemps[i], (float)temps[i] / 10); // divide by 10 as specified in Scaling column
+                        //read int16 temperatures
+                        ushort numInputs = 10;
+                        byte slaveID = 1;
+                        ushort startAddress = 1000;  //select address from Totus Modbus table 
+                        ushort[] temps = master.ReadInputRegisters(slaveID, startAddress, numInputs);//*2 because we are reading 2byte unsigned short that needs converted to 4 byte floats
+
+                        for (int i = 0; i < numInputs; i++)
+                        {
+                            Console.WriteLine("{0} = {1}°C", totusTemps[i], (float)temps[i] / 10); // divide by 10 as specified in Scaling column
+                        }
                     }
                 }
                 {
@@ -103,6 +105,7 @@ namespace totus_nmod
                         Console.WriteLine("{0} = {1} ppm", totusDGA[i], Convert2Float(inputsdga[i * 2], inputsdga[i * 2 + 1]));
                     }
                 }
+                master.Dispose();
             }
             catch (Exception exception)
             {
@@ -110,8 +113,7 @@ namespace totus_nmod
                 //No response from server.
                 //The server maybe close the connection, or response timeout.
                 Console.WriteLine(exception.Message);
-            }
-            master.Dispose();
+            }            
             Console.Read();
         }
     }
