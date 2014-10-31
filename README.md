@@ -10,7 +10,7 @@ Totus_pymod_serial - Python Example using Pymodbus library for serial communicat
 Totus_pymod_tcp - Python Example using Pymodbus library for TCP communications.
 
 C# projects built using Visual Studio Express 2013.
-Java projects built using Netbeans 8.
+Java projects built using Netbeans 8.1.
 Python projects built using LiClipse.
 
 RXTX binary builds provided as a courtesy of Mfizz Inc. (http://mfizz.com/).
